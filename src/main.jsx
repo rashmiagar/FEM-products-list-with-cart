@@ -4,10 +4,10 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "../utils/store.js";
 import { BrowserRouter, Routes, Route } from "react-router";
-import NavBar from "./Context/NavBar.jsx";
-import About from "./Context/About.jsx"
-import Cart from "./Context/Cart.jsx"
-import Settings from "./Context/Settings.jsx"
+import NavBar from "./components/NavBar.jsx";
+import About from "./components/About.jsx"
+import Cart from "./components/Cart.jsx"
+import Settings from "./components/Settings.jsx"
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
