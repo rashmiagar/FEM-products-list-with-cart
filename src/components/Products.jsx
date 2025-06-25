@@ -42,10 +42,10 @@ const dispatch=useDispatch()
         </picture>
       </div>
       <AddToCartButton add={handleAddToCart} item={item} />
-      <div className="flex flex-col w-full">
-        <span className="text-gray-600">{item.category}</span>
+      <div className="flex flex-col w-full m-4">
+        <span className="text-amber-950">{item.category}</span>
         <span className="font-semibold">{item.name}</span>
-        <span className="font-bold text-xl">${item.price}</span>
+        <span className=" text-xl text-amber-700 font-semibold">${item.price.toFixed(2)}</span>
         
       
       </div>

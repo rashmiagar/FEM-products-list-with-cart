@@ -20,41 +20,35 @@ const Cart = () => {
 
     return cart.items.map((item) => {
       return (
-        <div key={item.id} className="flex flex-col mt-2">
-          <span>{item.title}</span>
-          <span>
-            <strong>Quantity</strong>: {item.quantity}
-          </span>
-          <span>
-            <strong>Price</strong>: ${item.price}
-          </span>
-          <br />
-          <button
-            onClick={() => dispatch(remove(item))}
-            className="font-bold text-white
-          bg-red-500 "
-          >
-            Remove
-          </button>
+        <div key={item.id} className="mt-2 pb-2 border-b-1 border-zinc-300">
+          <span>{item.name}</span><br/>
+          <div className="flex flex-row w-[100%] justify-between">
+            <div>
+              <span className="text-amber-700 mr-2">
+                {item.quantity}x
+              </span>
+              <span className="text-amber-950 mr-2 font-light">@ ${item.price.toFixed(2)}</span>
+              <span className="text-amber-950 font-bold">
+                ${(item.price * item.quantity).toFixed(2)}
+              </span>
+            </div>
+            <img src="public/assets/images/icon-remove-item.svg" onClick={() => dispatch(remove(item))} className="border-2 rounded-full p-1 border-yellow-700 cursor-pointer hover:border-black" />
+          </div>
         </div>
       );
     });
   };
 
   return (
-    <div className="flex justify-between items-center">
-      {/* TODO: Implement cart summary display */}
-      <div className="flex items-center gap-4">
-        <div className="font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+    <div className="p-4 bg-white w-[25%] rounded-lg ml-4">
+      <h2 className="text-2xl text-amber-700 font-bold">Your Cart ({cart.quantity})</h2>
+      <div className="flex flex-col gap-4">
+        <div className="font-medium rounded-lg text-sm py-2.5 me-2 mb-2">
           {renderCartSummary()}
-          <span>
-            <strong>Items in cart</strong>: {cart.quantity}
-          </span>
-          <br />
-          <span>
-            <strong>Total Price</strong>: ${cart.total}{" "}
-          </span>
         </div>
+
+        <div className="flex justify-between">Order Total <h2 className="text-2xl text-yellow-950 font-extrabold">${cart.total}</h2></div>
+        <button className="bg-amber-800 rounded-2xl p-2 w-[70%] ml-[15%] text-white cursor-pointer">Confirm Order</button>
       </div>
     </div>
   );
