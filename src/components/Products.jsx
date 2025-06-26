@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { CartContext } from "./CartContext";
-import { useDispatch,useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import  {add} from "../../utils/cartSlice";
 import { remove } from "../../utils/cartSlice";
 import { AddToCartButton } from "./AddToCartButton";

@@ -42,11 +42,11 @@ const cartSlice = createSlice({
     remove: (state, { payload }) => {
       state.items = state.items.filter((item) => item.id !== payload.id);
       state.total -= parseFloat(payload.price * payload.quantity);
-      state.total = state.total.toFixed(2);
+      state.total = parseFloat(state.total.toFixed(2));
       state.quantity -= payload.quantity;
     },
 
-    clear: () => {
+    clear: (state) => {
       state.items = [];
       state.total = 0;
       state.quantity = 0;

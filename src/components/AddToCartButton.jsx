@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { increase, decrease } from "../../utils/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DecrementQuantityIcon from "/assets/images/icon-decrement-quantity.svg";
+import IconAddToCart from "/assets/images/icon-add-to-cart.svg";
 
 export const AddToCartButton = ({ add, item }) => {
   const reduxItems = useSelector((state) => state.cart.items);
@@ -25,9 +26,13 @@ export const AddToCartButton = ({ add, item }) => {
 
   React.useEffect(() => {
     const existingItem = reduxItems.find((i) => i.id === item.id);
+    
     if (existingItem) {
       setQuantity(existingItem.quantity);
       setFlag(existingItem.flag);
+    } else {
+      setQuantity(0)
+      setFlag(false)
     }
   }, [reduxItems, item.id]);
 
@@ -60,9 +65,9 @@ export const AddToCartButton = ({ add, item }) => {
   ) : (
     <button
       onClick={add}
-      className=" cursor-pointer text-black hover:border-1 border-1 hover:border-amber-700 hover:text-amber-800 hover:font-bold bg-white py-2 px-4 rounded-full -mt-4"
+      className=" cursor-pointer text-xs text-black hover:border-1 border-1 hover:border-amber-700 hover:text-amber-800 hover:font-bold bg-white py-2 px-4 rounded-full -mt-4"
     >
-      🛒 Add to cart
+      <img src="/assets/images/icon-add-to-cart.svg" className="w-4 h-4 inline" /> <span>Add to cart</span>
       <img src="/assets/images/icon-decrement-quantity.svg"></img>
     </button>
   );

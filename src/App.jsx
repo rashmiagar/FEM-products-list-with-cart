@@ -17,9 +17,7 @@ function App() {
       <div className="grid grid-cols-3  min-h-screen  bg-[#FCF8F5FF]">
           {
             products.map((prod) => <Products key={uuidv4()} item={prod} />)
-          }
-          
-        
+          }        
       </div>   
       <Cart /> 
     </div>
