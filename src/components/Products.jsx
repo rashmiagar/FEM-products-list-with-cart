@@ -1,30 +1,38 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import  {add} from "../../utils/cartSlice";
-import { remove } from "../../utils/cartSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { add, remove } from "../../utils/cartSlice";
 import { AddToCartButton } from "./AddToCartButton";
 
 export const Products = ({ item }) => {
-  // const { addToCart } = useContext(CartContext);
-  const [quantity, setQuantity] = useState(1);
+  const reduxItems = useSelector((state) => state.cart.items);
+  const existingItem = reduxItems.find((i) => i.id === item.id);
 
-  
-const dispatch=useDispatch()
+  const [quantity, setQuantity] = useState(
+    existingItem ? existingItem.quantity : 0
+  );
 
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    if (quantity < 1) return alert("Please select a valid quantity.");
-    // addToCart(item, quantity);
-     dispatch(add({...item, quantity: quantity}))
-
+    setQuantity(quantity + 1);
+    dispatch(add({ ...item, quantity: 1 }));
   };
- const handleRemoveFromCart = () => {
-  dispatch(remove(item))
- };
-  
+  const handleRemoveFromCart = () => {
+    setQuantity(quantity - 1);
+    dispatch(remove({...item, quantity: 1}));
+  };
+
+  useEffect(() => {
+    setQuantity(existingItem ? existingItem.quantity : 0);
+  }, [reduxItems.length]);
+
   return (
-    <div className="flex flex-col items-center justify-around rounded-lg  m-2 w-70 ">
-      <div className="rounded-md overflow-hidden w-70">
+    <div className="flex flex-col items-center justify-around rounded-lg m-2">
+      <div
+        className={`rounded-md overflow-hidden ${
+          quantity > 0 ? "border-2 border-amber-700" : "border-none"
+        }`}
+      >
         <picture>
           <source
             media="(min-resolution: 1.5x)"
@@ -40,13 +48,17 @@ const dispatch=useDispatch()
           />
         </picture>
       </div>
-      <AddToCartButton add={handleAddToCart} item={item} />
+      <AddToCartButton
+        add={handleAddToCart}
+        remove={handleRemoveFromCart}
+        item={item}
+      />
       <div className="flex flex-col w-full m-4">
         <span className="text-amber-950">{item.category}</span>
         <span className="font-semibold">{item.name}</span>
-        <span className=" text-xl text-amber-700 font-semibold">${item.price.toFixed(2)}</span>
-        
-      
+        <span className=" text-xl text-amber-700 font-semibold">
+          ${item.price.toFixed(2)}
+        </span>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DecrementQuantityIcon from "/assets/images/icon-decrement-quantity.svg";
 import IconAddToCart from "/assets/images/icon-add-to-cart.svg";
 
-export const AddToCartButton = ({ add, item }) => {
+export const AddToCartButton = ({ add, remove, item }) => {
   const reduxItems = useSelector((state) => state.cart.items);
   const [flag, setFlag] = React.useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -20,6 +20,7 @@ export const AddToCartButton = ({ add, item }) => {
       setQuantity(quantity - 1);
     } else {
       setFlag(false);
+      remove()
     }
     dispatch(decrease({ ...item, quantity: quantity }));
   };
@@ -37,7 +38,7 @@ export const AddToCartButton = ({ add, item }) => {
   }, [reduxItems, item.id]);
 
   return flag ? (
-    <div className="flex flex-row items-center rounded-full  bg-amber-700 py-1 px-2 -mt-4 w-40 justify-between">
+    <div className="flex flex-row items-center rounded-full  bg-amber-700 py-1 px-4 -mt-4 justify-between">
       <span
         onClick={handleDecrease}
         // className=" text-black border-2 border-amber-400  font-bold mx-4 rounded-full px-2 py-1"
@@ -45,11 +46,10 @@ export const AddToCartButton = ({ add, item }) => {
       >
         <img
           src="/assets/images/icon-decrement-quantity.svg"
-          className="border-1 border-white-400 text-white cursor-pointer rounded-full px-1 py-2"
+          className="border-1 border-white-400 text-white cursor-pointer rounded-full px-1 w-4 h-4"
         ></img>
-        {/* <DecrementQuantityIcon /> */}
       </span>
-      <p className="text-white">{quantity}</p>
+      <p className="text-white mx-1">{quantity}</p>
       <span
         onClick={handleIncrease}
         // className=" text-white border-2 border-amber-400 font-bold py-[4px] px-[8px] mx-4 rounded-full"
@@ -57,7 +57,7 @@ export const AddToCartButton = ({ add, item }) => {
       >
         <img
           src="/assets/images/icon-increment-quantity.svg"
-          className="border-1 border-white-400 text-white cursor-pointer rounded-full p-1"
+          className="border-1 border-white-400 text-white cursor-pointer rounded-full px-1 w-4 h-4"
         ></img>
       </span>
       
@@ -65,10 +65,9 @@ export const AddToCartButton = ({ add, item }) => {
   ) : (
     <button
       onClick={add}
-      className=" cursor-pointer text-xs text-black hover:border-1 border-1 hover:border-amber-700 hover:text-amber-800 hover:font-bold bg-white py-2 px-4 rounded-full -mt-4"
+      className=" cursor-pointer text-xs text-black border-1 hover:text-amber-800 hover:font-bold bg-white py-2 px-4 rounded-full -mt-4"
     >
-      <img src="/assets/images/icon-add-to-cart.svg" className="w-4 h-4 inline" /> <span>Add to cart</span>
-      <img src="/assets/images/icon-decrement-quantity.svg"></img>
+      <img src="/assets/images/icon-add-to-cart.svg" className="w-4 h-4 inline " /> <span>Add to cart</span>
     </button>
   );
 };
